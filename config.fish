@@ -1,0 +1,78 @@
+# env
+set -gx CARGO_HOME "$XDG_DATA_HOME/cargo"
+set -gx RUSTUP_HOME "$XDG_DATA_HOME/rustup"
+set -gx BUN_INSTALL "$XDG_DATA_HOME/bun"
+set -gx GOCACHE "$XDG_CACHE_HOME/go-build"
+set -gx GOPATH "$XDG_DATA_HOME/go"
+set -gx GOBIN "$GOPATH/bin"
+set -gx GOMODCACHE "$GOPATH/pkg/mod"
+
+## clean up home folder dotfiles
+set -gx PYTHON_HISTORY "$XDG_DATA_HOME/python/python_history"
+set -gx HISTFILE "$XDG_CACHE_HOME/sh_history"
+set -gx LESSHISTFILE -
+set -gx _FASDER_DATA "$XDG_DATA_HOME/.fasder"
+
+set -gx MANPAGER "sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | LESS=\"-I\" bat -p -lman'"
+set -gx EDITOR "zed"
+set -gx VISUAL "zed --wait"
+set -gx FZF_DEFAULT_OPTS '--bind \'ctrl-p:toggle-preview\' --cycle --layout=reverse --border --height=90% --preview-window=wrap --marker="*"'
+set fzf_directory_opts --bind "ctrl-o:execute(zed {})"
+
+# path
+fish_add_path -P $HOME/.local/bin
+fish_add_path $XDG_DATA_HOME/cargo/bin
+fish_add_path $BUN_INSTALL/bin
+
+# ---- interactive ----
+status is-interactive || exit 0
+
+# source event handlers
+source $__fish_config_dir/functions/_fasd_update_freq.fish
+
+# keys
+bind ctrl-x kill_region ## cut line to clipboard
+bind shift-tab accept-autosuggestion
+bind ctrl-comma edit_config
+bind ctrl-b br
+bind alt-up history-token-search-backward
+bind alt-down history-token-search-forward
+bind alt-r fuck
+
+# utils
+## Initialize zoxide for fast jumping with 'z'.
+if type -q zoxide
+    if not test -r $__fish_cache_dir/zoxide_init.fish
+        zoxide init fish >$__fish_cache_dir/zoxide_init.fish
+    end
+    source $__fish_cache_dir/zoxide_init.fish
+end
+## tv fuzzy finder
+if type -q tv
+   if not test -r $__fish_cache_dir/tv_init.fish
+      tv init fish |
+      string replace 'bind \\cr tv_shell_history' '' >$__fish_cache_dir/tv_init.fish
+   end
+   source $__fish_cache_dir/tv_init.fish
+end
+## mcfly for history? not sure if we like it yet
+if type -q mcfly
+    if not test -r $__fish_cache_dir/mcfly_init.fish
+        mcfly init fish >$__fish_cache_dir/mcfly_init.fish
+    end
+    source $__fish_cache_dir/mcfly_init.fish
+end
+
+# prompt
+set fish_greeting
+set -g hydro_symbol_start '╭── '
+# manually set the newline part of status so we can color it separately
+set -g _hydro_newline "\n$hydro_color_normal╰"
+set -g hydro_symbol_prompt '$'
+set -g fish_prompt_pwd_dir_length 16
+set -g hydro_symbol_git_dirty 🞶
+
+# cleanup history
+if status is-login
+   echo 'all' | history delete --prefix 'aichat ' -- &> /dev/null
+end
