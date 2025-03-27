@@ -18,7 +18,7 @@ abbr -a -- aider aider --env-file /Users/dkmar/.config/aider/.env
 abbr -a -- findall find . -type f -not -path "\"./.git*/*\""
 abbr -a -- wget curl -O
 abbr -a -- mflux mflux-generate --model dev --steps 25 --low-ram --width 832 --height 1216 --metadata --prompt
-abbr -a -- collapse-spaces tr '\n' ' ' | tr -s ' '
+abbr -a -- collapse-spaces "tr '\n' ' ' | tr -s ' '"
 abbr -a -- ytdl yt-dlp -o '"%(title)s.%(ext)s"'
 
 set -g MY_ABBRS_INITIALIZED true
