@@ -6,6 +6,7 @@ set -gx GOCACHE "$XDG_CACHE_HOME/go-build"
 set -gx GOPATH "$XDG_DATA_HOME/go"
 set -gx GOBIN "$GOPATH/bin"
 set -gx GOMODCACHE "$GOPATH/pkg/mod"
+set -gx TODO_PATH "$XDG_DATA_HOME/todo"
 
 ## clean up home folder dotfiles
 set -gx PYTHON_HISTORY "$XDG_DATA_HOME/python/python_history"
@@ -61,6 +62,10 @@ if type -q mcfly
         mcfly init fish >$__fish_cache_dir/mcfly_init.fish
     end
     source $__fish_cache_dir/mcfly_init.fish
+end
+## pueued
+if ! pgrep -q pueued
+    pueued &
 end
 
 # prompt

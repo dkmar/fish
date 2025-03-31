@@ -6,7 +6,7 @@ abbr -a -- lsa eza -la
 abbr -a -- tree eza -T
 abbr -a -- less bat
 abbr -a -- gs git status
-abbr -a --set-cursor -- gcm git commit -m \'%\'
+abbr -a gcm --function _git_commit_ai
 abbr -a -- ga git_add_fzf
 abbr -a -- gp git push
 abbr -ac abbr refresh '; set -e MY_ABBRS_INITIALIZED; and source ~/.config/fish/conf.d/abbrs.fish'
