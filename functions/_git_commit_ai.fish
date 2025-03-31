@@ -5,8 +5,8 @@ function _git_commit_ai
         commandline --replace "git commit -m \"$(lumen draft)\""
     end
     # async invocation
-    bind alt-f9 ai_commit
-    sendkeys --application-name "Ghostty" -c '<c:f9:alt>' &
+    bind f9 ai_commit
+    sendkeys -d 0 -i 0 -c '<c:f9>' &
     # send placeholder
     echo "..."
 end
