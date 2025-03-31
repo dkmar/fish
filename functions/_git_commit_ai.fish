@@ -6,7 +6,7 @@ function _git_commit_ai
     end
     # async invocation
     bind alt-f9 ai_commit
-    sendkeys --application-name "Ghostty" -c '<c:f9:alt>' 2>&1 & disown
+    sendkeys --application-name "Ghostty" -c '<c:f9:alt>' &
     # send placeholder
     echo "..."
 end
