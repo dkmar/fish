@@ -4,7 +4,7 @@ function edit_config
         ~/.config/fish/config.fish \
         ~/.config/fish/
 
-    set selected_path (string join \n $config_files | fzf)
+    set selected_path (string join \n $config_files | command fzf)
     if test -n "$selected_path"
         zed "$selected_path"
     end

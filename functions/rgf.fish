@@ -1,7 +1,7 @@
 function rgf --description 'rg tui built with fzf and bat'
    set INITIAL_QUERY $argv[1]
    set RG_OPTS $argv[2..] " --column --line-number --no-heading --color=always --smart-case"
-   fzf --ansi --disabled --query "$INITIAL_QUERY" \
+   command fzf --ansi --disabled --query "$INITIAL_QUERY" \
        --bind "start:reload:rg {q} $RG_OPTS" \
        --bind "change:reload:sleep 0.1; rg {q} $RG_OPTS || true" \
        --bind "alt-enter:unbind(change,alt-enter)+change-prompt(2. fzf> )+enable-search+clear-query" \

@@ -17,8 +17,8 @@ set -gx _FASDER_DATA "$XDG_DATA_HOME/.fasder"
 set -gx MANPAGER "sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | LESS=\"-I\" bat -p -lman'"
 set -gx EDITOR "zed"
 set -gx VISUAL "zed --wait"
-set -gx FZF_DEFAULT_OPTS '--bind \'ctrl-p:toggle-preview\' --cycle --layout=reverse --border --height=90% --preview-window=wrap --marker="*"'
-set fzf_directory_opts --bind "ctrl-o:execute(zed {})"
+set -gx FZF_DEFAULT_OPTS '--multi --bind "ctrl-p:toggle-preview" --bind "ctrl-o:become(zed {})" --cycle --layout=reverse --border --height=90% --preview-window=wrap --marker="*"'
+set fzf_directory_opts
 
 # path
 fish_add_path -P $HOME/.local/bin
@@ -33,7 +33,6 @@ source $__fish_config_dir/functions/_fasd_update_freq.fish
 
 # keys
 bind ctrl-x kill_region ## cut line to clipboard
-bind shift-tab accept-autosuggestion
 bind ctrl-comma edit_config
 bind ctrl-b br
 bind alt-up history-token-search-backward
