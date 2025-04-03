@@ -1,12 +1,8 @@
 # ok to get async execution we are binding a function and then asynchronously sending the bound key lol
 function _git_commit_ai
-    # function to generate ai commit message with `lumen draft`
-    function ai_commit
-        commandline --replace "git commit -m \"$(lumen draft)\""
+    # git diff --staged | aichat -r concise -m gemini:gemini-2.0-flash summarize what we did at a high level for a commit message | pbcopy &
+    if test (git diff --staged | count) -gt 0
+        lumen draft --context "thoughtfully cover the main changes" | pbcopy &
+        echo 'git commit -m "'
     end
-    # async invocation
-    bind f9 ai_commit
-    sendkeys -d 0 -i 0 -c '<c:f9>' &
-    # send placeholder
-    echo "..."
 end
