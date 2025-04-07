@@ -50,18 +50,19 @@ end
 ## tv fuzzy finder
 if type -q tv
    if not test -r $__fish_cache_dir/tv_init.fish
-      tv init fish |
-      string replace 'bind \\cr tv_shell_history' '' >$__fish_cache_dir/tv_init.fish
+      # tv init fish |
+      #string replace 'bind \\cr tv_shell_history' '' >$__fish_cache_dir/tv_init.fish
+      tv init fish > $__fish_cache_dir/tv_init.fish
    end
    source $__fish_cache_dir/tv_init.fish
 end
 ## mcfly for history? not sure if we like it yet
-if type -q mcfly
-    if not test -r $__fish_cache_dir/mcfly_init.fish
-        mcfly init fish >$__fish_cache_dir/mcfly_init.fish
-    end
-    source $__fish_cache_dir/mcfly_init.fish
-end
+# if type -q mcfly
+#     if not test -r $__fish_cache_dir/mcfly_init.fish
+#         mcfly init fish >$__fish_cache_dir/mcfly_init.fish
+#     end
+#     source $__fish_cache_dir/mcfly_init.fish
+# end
 ## pueued
 if ! pgrep -q pueued
     pueued &
