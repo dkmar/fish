@@ -38,6 +38,10 @@ bind ctrl-b br
 bind alt-up history-token-search-backward
 bind alt-down history-token-search-forward
 bind alt-r fuck
+bind ctrl-p _fzf_search_processes
+bind alt-shift-backspace backward-kill-token
+bind alt-shift-left backward-token
+bind alt-shift-right forward-token
 
 # utils
 ## Initialize zoxide for fast jumping with 'z'.

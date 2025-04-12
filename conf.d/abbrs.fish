@@ -1,7 +1,7 @@
 # guard for unnecessary init
 set -q MY_ABBRS_INITIALIZED; and return
 
-abbr -a -- ls eza -l
+abbr -a -- ls eza
 abbr -a -- lsa eza -la
 abbr -a -- tree eza -T
 abbr -a -- less bat
