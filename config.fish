@@ -42,6 +42,8 @@ bind ctrl-p _fzf_search_processes
 bind alt-shift-backspace backward-kill-token
 bind alt-shift-left backward-token
 bind alt-shift-right forward-token
+bind ctrl-o 'zed .'
+bind ctrl-h herestr
 
 # utils
 ## Initialize zoxide for fast jumping with 'z'.
@@ -60,13 +62,7 @@ if type -q tv
    end
    source $__fish_cache_dir/tv_init.fish
 end
-## mcfly for history? not sure if we like it yet
-# if type -q mcfly
-#     if not test -r $__fish_cache_dir/mcfly_init.fish
-#         mcfly init fish >$__fish_cache_dir/mcfly_init.fish
-#     end
-#     source $__fish_cache_dir/mcfly_init.fish
-# end
+
 ## pueued
 if ! pgrep -q pueued
     pueued &

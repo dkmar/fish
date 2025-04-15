@@ -21,5 +21,6 @@ abbr -a -- mflux mflux-generate --model dev --steps 25 --low-ram --width 832 --h
 abbr -a -- collapse-spaces "tr '\n' ' ' | tr -s ' '"
 abbr -a -- ytdl yt-dlp -o '"%(title)s.%(ext)s"'
 abbr -a -- mp3dl yt-dlp -o '"%(title)s.%(ext)s"' --extract-audio
+abbr -a -- exists test -e
 
 set -g MY_ABBRS_INITIALIZED true
