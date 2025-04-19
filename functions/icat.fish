@@ -3,7 +3,7 @@ function icat --description 'Wrap kitten icat to read files, URLs or raw image d
     or return
 
     # ───────────────────────────────────────────────────────
-    # 1) If stdout is a TTY, just forward args (allows interactive use + flags)
+    # 1) Interactive use: if STDIN is a TTY, just forward everything
     if isatty
         /Applications/kitty.app/Contents/MacOS/kitten icat $argv
         return
@@ -19,7 +19,7 @@ function icat --description 'Wrap kitten icat to read files, URLs or raw image d
     # ───────────────────────────────────────────────────────
     # 3) Peek first 10 bytes to detect a URL (look for "://")
     if head --bytes 10 $tmp | string match -qr '://'
-        # — URL case — strip newline and hand URL to kitty
+        # — URL case — strip newline and curl image
         set -l url (string trim (cat $tmp))
         curl -L --fail $url > $tmp
     end
