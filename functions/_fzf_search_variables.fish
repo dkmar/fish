@@ -1,3 +1,6 @@
+# Usage:
+#   <enter> to copy selected var values
+#   <alt-enter> to copy selected var names
 # This function expects the following two arguments:
 # argument 1 = output of (set --show | psub), i.e. a file with the scope info and values of all variables
 # argument 2 = output of (set --names | psub), i.e. a file with all variable names
@@ -27,6 +30,8 @@ function _fzf_search_variables --argument-names set_show_output set_names_output
             --preview-window="wrap" \
             --multi \
             --query=$cleaned_curr_token \
+            --bind 'enter:become:for v in {+}; echo $$v; end' \
+            --bind 'alt-enter:accept' \
             $fzf_variables_opts
     )
 
@@ -34,14 +39,20 @@ function _fzf_search_variables --argument-names set_show_output set_names_output
         # If the current token begins with a $, do not overwrite the $ when
         # replacing the current token with the selected variable.
         # Uses brace expansion to prepend $ to each variable name.
-        commandline --current-token --replace (
-            if string match --quiet -- '$*' $current_token
-                string join " " \${$variable_names_selected}
-            else
-                string join " " $variable_names_selected
-            end
-        )
+        #
+        for var in $variable_names_selected
+            echo -n $var | pbcopy
+            sleep 0.15
+        end
+        # commandline --current-token --replace (
+        #     if string match --quiet -- '$*' $current_token
+        #         string join " " \${$variable_names_selected}
+        #     else
+        #         string join " " $variable_names_selected
+        #     end
+        # )
     end
 
-    commandline --function repaint
+    # commandline -f cancel
+    commandline -f repaint
 end

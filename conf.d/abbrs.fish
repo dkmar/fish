@@ -11,7 +11,7 @@ abbr -a -- ga git_add_fzf
 abbr -a -- gp git push
 abbr -ac abbr refresh '; set -e MY_ABBRS_INITIALIZED; and source ~/.config/fish/conf.d/abbrs.fish'
 abbr -a -- choose choose --one-indexed
-abbr -a -- ai aichat -r concise -m gemini:gemini-2.0-flash
+abbr -a -- ai aichat -r concise --
 abbr -a -- xcode xed
 abbr -a -- fast fast --upload
 abbr -a -- aider aider --env-file /Users/dkmar/.config/aider/.env
@@ -22,5 +22,7 @@ abbr -a -- collapse-spaces "tr '\n' ' ' | tr -s ' '"
 abbr -a -- ytdl yt-dlp -o '"%(title)s.%(ext)s"'
 abbr -a -- mp3dl yt-dlp -o '"%(title)s.%(ext)s"' --extract-audio
 abbr -a -- exists test -e
-
+abbr -a -- ais aichat -r shell --
+abbr -a -- brd br --sort-by-date
+abbr -a -- table csvlens --no-headers -d auto
 set -g MY_ABBRS_INITIALIZED true

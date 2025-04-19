@@ -1,14 +1,22 @@
 # bat wrapper that does pretty json automatically
 function bat --wraps='bat'
-    if isatty
+    # case: bat <file>
+    # case: pbpaste | bat -l <language>
+    if isatty || string match -qr -- '.* -l .+' "$argv"
         command bat $argv
         return $status
     end
 
+    # case: cat <file> | bat
     # read from pipe and guess if json
-    tee /tmp/_bat | head -n 100 | tr -d '\n' | rg --no-ignore --no-line-number --quiet --no-heading '^\s*[\{\[]\s*(?:"[^"]*"\s*:\s*.+|\[[^\]]*\]|\{[^}]*\}|[0-9]+|true|false|null)\s*'
-    and jless --mode line /tmp/_bat
-    or command bat $argv /tmp/_bat
+    tee /tmp/_bat |             # stash the full input
+      head --bytes 1024 |       # lets just examine the first bit
+      rg --invert-match '^//' | # strip leading comments from JSONC
+      tr -d '\n' |              # drop lines breaks -- one long line
+      rg -q '^\s*[\{\[]\s*(?:"[^"]*"\s*:\s*.+|\[[^\]]*\]|\{[^}]*\}|[0-9]+|true|false|null)\s*'
+    and set --prepend argv -l json
+
+    command bat $argv /tmp/_bat
 end
 
 # wayyyyy slower than the above

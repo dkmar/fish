@@ -44,6 +44,9 @@ bind alt-shift-left backward-token
 bind alt-shift-right forward-token
 bind ctrl-o 'zed .'
 bind ctrl-h herestr
+bind alt-backspace backward-kill-path-component
+bind f9 'commandline -i "\("'
+bind f10 'commandline -i "\)"'
 
 # utils
 ## Initialize zoxide for fast jumping with 'z'.
