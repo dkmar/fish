@@ -10,10 +10,9 @@ function bat --wraps='bat'
     # case: cat <file> | bat
     # read from pipe and guess if json (just based on the first 1024 bytes)
     read -z --nchars 1024 chunk
-    echo -n $chunk |
-      rg --invert-match '^//' | # strip leading comments from JSONC
-      tr -d '\n' |              # drop lines breaks -- one long line
-      rg -q '^\s*[\{\[]\s*(?:"[^"]*"\s*:\s*.+|\[[^\]]*\]|\{[^}]*\}|[0-9]+|true|false|null)\s*'
+    string match --invert '//*' -- $chunk | # strip comments / handle JSONC
+    string join --no-empty '' |             # drop lines breaks -> one long line for regex check
+    string match -qr '^\s*[\{\[]\s*(?:"[^"]*"\s*:\s*.+|\[[^\]]*\]|\{[^}]*\}|[0-9]+|true|false|null)\s*'
     and set --prepend argv -l json
 
     # forward to bat
