@@ -1,5 +1,5 @@
 function icat --description 'Wrap kitten icat to read files, URLs or raw image data'
-    argparse "s/save" -- $argv
+    argparse -i "s/save" -- $argv
     or return
 
     # ───────────────────────────────────────────────────────
@@ -12,7 +12,7 @@ function icat --description 'Wrap kitten icat to read files, URLs or raw image d
     # ───────────────────────────────────────────────────────
     # 2) Slurp *all* stdin into a temp file
     set -q _flag_save
-    and set tmp (mktemp /tmp/icat.XXXXXX)
+    and set tmp (mktemp /tmp/icat-XX)-(date +%H\h_%M\m)
     or set tmp /tmp/_icat
     sponge $tmp  # just in case they're catting /tmp/_icat lol
 
@@ -21,7 +21,7 @@ function icat --description 'Wrap kitten icat to read files, URLs or raw image d
     if head --bytes 10 $tmp | string match -qr '://'
         # — URL case — strip newline and curl image
         set -l url (string trim (cat $tmp))
-        curl -L --fail $url > $tmp
+        curl -L -f $url > $tmp
     end
     # — raw image data — feed the blob *and* any flags into kitty
     /Applications/kitty.app/Contents/MacOS/kitten icat $argv < $tmp
@@ -29,8 +29,12 @@ function icat --description 'Wrap kitten icat to read files, URLs or raw image d
     # ───────────────────────────────────────────────────────
     # 4) Cleanup
     # rm $tmp
+
+    # save with correct extension
     if set -q _flag_save
-        echo "Saved image data to: $tmp"
+        set -l fp $tmp.(magick identify -quiet -format '%m' $tmp | string lower)
+        mv $tmp $fp
+        echo "Saved image data to: $fp"
     end
 end
 
