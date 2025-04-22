@@ -2,21 +2,25 @@
 function bat --wraps='bat'
     # case: bat <file>
     # case: pbpaste | bat -l <language>
-    if isatty || string match -qr -- '.* -l .+' "$argv"
+    if isatty; or contains -- -l $argv
         command bat $argv
         return $status
     end
 
     # case: cat <file> | bat
-    # read from pipe and guess if json
-    tee /tmp/_bat |             # stash the full input
-      head --bytes 1024 |       # lets just examine the first bit
+    # read from pipe and guess if json (just based on the first 1024 bytes)
+    read -z --nchars 1024 chunk
+    echo -n $chunk |
       rg --invert-match '^//' | # strip leading comments from JSONC
       tr -d '\n' |              # drop lines breaks -- one long line
       rg -q '^\s*[\{\[]\s*(?:"[^"]*"\s*:\s*.+|\[[^\]]*\]|\{[^}]*\}|[0-9]+|true|false|null)\s*'
     and set --prepend argv -l json
 
-    command bat $argv /tmp/_bat
+    # forward to bat
+    begin
+        echo -n $chunk  # prefix
+        cat             # rest
+    end | command bat $argv
 end
 
 # wayyyyy slower than the above
