@@ -25,6 +25,6 @@ abbr -a -- exists test -e
 abbr -a -- ais aichat -r shell --
 abbr -a -- brd br --sort-by-date
 abbr -a -- table csvlens --no-headers -d auto
-abbr -a -- sum awk '{t+=$1}END{print t}'
+abbr -a -- sum awk "'{t+=\$1} END {print t}'"
 
 set -g MY_ABBRS_INITIALIZED true

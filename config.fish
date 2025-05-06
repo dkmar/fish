@@ -35,6 +35,7 @@ source $__fish_config_dir/functions/_fasd_update_freq.fish
 bind ctrl-x kill_region ## cut line to clipboard
 bind ctrl-comma edit_config
 bind ctrl-b br
+bind ctrl-shift-r history-pager
 bind alt-up history-token-search-backward
 bind alt-down history-token-search-forward
 bind alt-r fuck
@@ -59,9 +60,8 @@ end
 ## tv fuzzy finder
 if type -q tv
    if not test -r $__fish_cache_dir/tv_init.fish
-      # tv init fish |
-      #string replace 'bind \\cr tv_shell_history' '' >$__fish_cache_dir/tv_init.fish
-      tv init fish > $__fish_cache_dir/tv_init.fish
+      # don't use the history binding cause the fzf history widget is better.
+      tv init fish | string match --invert 'bind \\cR tv_shell_history' >$__fish_cache_dir/tv_init.fish
    end
    source $__fish_cache_dir/tv_init.fish
 end
