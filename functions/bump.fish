@@ -13,28 +13,33 @@ function bump
         return 0
     end
 
+    # Get the current time (epoch seconds)
+    set -l now (date +%s)
+
     # Set default quantity to 1 if no argument is provided, otherwise use the first argument.
     set -l qty 1
     if set -q _flag_q
         # querying. dont bump.
         set qty 0
-    else if test -n "$argv[1]" -a "$argv[1]" -gt 0
-        # custom bump quantity
-        set qty $argv[1]
+    else
+        if test -n "$argv[1]" -a "$argv[1]" -gt 0
+            # custom bump quantity
+            set qty $argv[1]
+        end
+        # log the current bump.
+        echo "$now $qty" >> "$bump_file"
     end
-
-    # Get the current time (epoch seconds) and log the current bump.
-    set -l now (date +%s)
-    echo "$now $qty" >> "$bump_file"
 
     # Define threshold for the last 24 hours.
     set -l threshold (math "$now - 86400")
 
     set -l tmpfile "$bump_file.tmp"; touch "$tmpfile"
     # Process each record from the log.
+    set -l last_time 0
     set -l total 0
     while read -l tm cnt
         if test $tm -ge $threshold
+            set last_time $tm
             set total (math "$total + $cnt")
             echo "$tm $cnt" >> "$tmpfile"
         end
@@ -44,5 +49,5 @@ function bump
     mv "$tmpfile" "$bump_file"
 
     # Output the cumulative total and current bump time.
-    echo "$total ~ @ $(date '+%A %H:%M %m-%d')"
+    echo "$total ~ @ $(date -r $last_time '+%A %H:%M %m-%d')"
 end

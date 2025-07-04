@@ -6,13 +6,16 @@ set -gx GOCACHE "$XDG_CACHE_HOME/go-build"
 set -gx GOPATH "$XDG_DATA_HOME/go"
 set -gx GOBIN "$GOPATH/bin"
 set -gx GOMODCACHE "$GOPATH/pkg/mod"
-set -gx TODO_PATH "$XDG_DATA_HOME/todo"
 
 ## clean up home folder dotfiles
 set -gx PYTHON_HISTORY "$XDG_DATA_HOME/python/python_history"
 set -gx HISTFILE "$XDG_CACHE_HOME/sh_history"
 set -gx LESSHISTFILE -
 set -gx _FASDER_DATA "$XDG_DATA_HOME/.fasder"
+set -gx TODO_PATH "$XDG_DATA_HOME/todo"
+set -gx JUPYTER_PLATFORM_DIRS 1
+set -gx MPLCONFIGDIR "$XDG_CACHE_HOME/matplotlib"
+set -gx NPM_CONFIG_CACHE "$XDG_CACHE_HOME/npm"
 
 set -gx MANPAGER "sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | LESS=\"-I\" bat -p -lman'"
 set -gx EDITOR "zed"
