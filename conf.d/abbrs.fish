@@ -2,11 +2,12 @@
 set -q MY_ABBRS_INITIALIZED; and return
 
 abbr -a -- ls eza
+abbr -a -- lsl eza -l
 abbr -a -- lsa eza -la
 abbr -a -- tree eza -T
 abbr -a -- less bat
 abbr -a -- gs git status
-abbr -a gcm --function _git_commit_ai
+abbr -a --set-cursor -- gcm git commit -m \'%\'
 abbr -a -- ga git_add_fzf
 abbr -a -- gp git push
 abbr -ac abbr refresh '; set -e MY_ABBRS_INITIALIZED; and source ~/.config/fish/conf.d/abbrs.fish'
@@ -26,5 +27,6 @@ abbr -a -- ais aichat -r shell --
 abbr -a -- brd br --sort-by-date
 abbr -a -- table csvlens --no-headers -d auto
 abbr -a -- sum awk "'{t+=\$1} END {print t}'"
-
+abbr --add --set-cursor -- each while read -l x\n%\nend
+abbr --add --set-cursor -- anyb 'open -a AnyBar && anybar yellow;' % '; anybar green'
 set -g MY_ABBRS_INITIALIZED true

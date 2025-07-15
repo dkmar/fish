@@ -1,6 +1,7 @@
 function fzf --wraps='fzf'
     set -l flag_cmdline _CMDLINE
     set -l OPTS $FZF_DEFAULT_OPTS \
+        "--preview 'fzf-preview.sh {}' --preview-window hidden" \
         "--bind 'alt-c:become:[ \$FZF_SELECT_COUNT -eq 0 ]; and echo -n {} | pbcopy; or echo -n {+} | pbcopy'" \
         "--bind 'alt-enter:become:echo $flag_cmdline; [ \$FZF_SELECT_COUNT -eq 0 ]; and echo {}; or echo {+}'"
 

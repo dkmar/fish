@@ -64,7 +64,7 @@ end
 if type -q tv
    if not test -r $__fish_cache_dir/tv_init.fish
       # don't use the history binding cause the fzf history widget is better.
-      tv init fish | string match --invert 'bind \\cR tv_shell_history' >$__fish_cache_dir/tv_init.fish
+      tv init fish | string match --invert '*\\cR tv_shell_history' >$__fish_cache_dir/tv_init.fish
    end
    source $__fish_cache_dir/tv_init.fish
 end
