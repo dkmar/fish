@@ -10,6 +10,7 @@ function _fzf_search_history --description "Search command history. Replace the 
         set -f fzf_history_time_format "%m-%d %H:%M:%S"
     end
 
+    set flag_history_edit _EDIT_HISTORY
     # Delinate time from command in history entries using the vertical box drawing char (U+2502).
     # Then, to get raw command from history entries, delete everything up to it. The ? on regex is
     # necessary to make regex non-greedy so it won't match into commands containing the char.
@@ -25,6 +26,7 @@ function _fzf_search_history --description "Search command history. Replace the 
             --query=(commandline) \
             --preview="string replace --regex '$time_prefix_regex' '' -- {} | fish_indent --ansi" \
             --preview-window="bottom:3:wrap" \
+            --bind="shift-delete:become:echo $flag_history_edit; [ \$FZF_SELECT_COUNT -eq 0 ]; and echo {}; or cat {+f}" \
             $fzf_history_opts |
         string split0 |
         # remove timestamps from commands selected
@@ -32,7 +34,13 @@ function _fzf_search_history --description "Search command history. Replace the 
     )
 
     if test $status -eq 0
-        commandline --replace -- $commands_selected
+        if test "$commands_selected[1]" = "$flag_history_edit"
+            for cmd in $commands_selected[2..]
+                history delete --exact --case-sensitive -- $cmd
+            end
+        else
+            commandline --replace -- $commands_selected
+        end
     end
 
     commandline --function repaint
