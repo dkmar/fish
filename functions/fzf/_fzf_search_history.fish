@@ -15,12 +15,23 @@ function _fzf_search_history --description "Search command history. Replace the 
     # Then, to get raw command from history entries, delete everything up to it. The ? on regex is
     # necessary to make regex non-greedy so it won't match into commands containing the char.
     set -f time_prefix_regex '^.*? │ '
+
     # Delinate commands throughout pipeline using null rather than newlines because commands can be multi-line
+
+    # 1.  Build the list that fzf will see
+    # Calculate indent for pretty wrapping
+    set -l lhs_indent_size (string length (date +"$fzf_history_time_format | "))
+    set -l wrap_prefix (string repeat -n $lhs_indent_size ' ')
+
     set -f commands_selected (
         builtin history --null --show-time="$fzf_history_time_format │ " |
+        sd '\n' "\n$wrap_prefix" |
         _fzf_wrapper --read0 \
             --print0 \
             --multi \
+            --no-cycle \
+            --wrap-sign="$wrap_prefix" \
+            --highlight-line \
             --scheme=history \
             --prompt="History> " \
             --query=(commandline) \
@@ -32,6 +43,7 @@ function _fzf_search_history --description "Search command history. Replace the 
         # remove timestamps from commands selected
         string replace --regex $time_prefix_regex ''
     )
+
 
     if test $status -eq 0
         if test "$commands_selected[1]" = "$flag_history_edit"

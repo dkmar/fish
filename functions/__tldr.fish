@@ -27,9 +27,9 @@ function __tldr \
     # Grab all tokens from the command line that do NOT start with '-'
     set -l args (commandline -po | string match -rv '^-')
 
-    set line_count (__n_lines (commandline -bc))
+    set _line_count (__n_lines (commandline -bc))
     set prompt_height (fish_prompt | count)
-    set line_count (math $line_count + $prompt_height)
+    set line_count (math $_line_count + $prompt_height)
 
     # If we have no tokens, just beep and return
     if not set -q args[1]
@@ -56,5 +56,5 @@ function __tldr \
         or printf \a
     end
 
-    string repeat -n (math  $line_count - $prompt_height) \n
+    string repeat -n $_line_count \n
 end
