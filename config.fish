@@ -47,10 +47,11 @@ bind alt-shift-backspace backward-kill-token
 bind alt-shift-left backward-token
 bind alt-shift-right forward-token
 bind ctrl-o 'zed .'
-bind ctrl-h herestr
 bind alt-backspace backward-kill-path-component
 bind f9 'commandline -i "\("'
 bind f10 'commandline -i "\)"'
+bind ctrl-h __tldr repaint  # alin's tldr helper
+bind ctrl-alt-h __fish_man_page
 
 # utils
 ## Initialize zoxide for fast jumping with 'z'.
