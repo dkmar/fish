@@ -29,4 +29,5 @@ abbr -a -- table csvlens --no-headers -d auto
 abbr -a -- sum awk "'{t+=\$1} END {print t}'"
 abbr --add --set-cursor -- each while read -l x\n%\nend
 abbr --add --set-cursor -- anyb 'open -a AnyBar && anybar yellow;' % '; anybar green'
+abbr --add --command z -- docs documents
 set -g MY_ABBRS_INITIALIZED true
