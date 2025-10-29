@@ -4,8 +4,8 @@ status is-interactive || exit
 # set -g sponge_version 1.1.0
 
 # Set global variables with defaults
-set -g sponge_delay 5
-set -g sponge_purge_only_on_exit true
+set -g sponge_delay 3
+set -g sponge_purge_only_on_exit false
 set -g sponge_filters sponge_filter_failed # sponge_filter_matched
 set -g sponge_allow_previously_successful false
 set -g sponge_successful_exit_codes 0
