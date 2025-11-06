@@ -4,6 +4,7 @@ set -q MY_ABBRS_INITIALIZED; and return
 abbr -a -- ls eza
 abbr -a -- lsl eza -l
 abbr -a -- lsa eza -la
+abbr -a -- lsd eza -l --sort=modified --reverse
 abbr -a -- tree eza -T
 abbr -a -- tree1 eza -T --level=1
 abbr -a -- tree2 eza -T --level=2
