@@ -24,9 +24,10 @@ set -gx FZF_DEFAULT_OPTS '--multi --bind "ctrl-p:toggle-preview" --bind "ctrl-o:
 set fzf_directory_opts
 
 # path
-fish_add_path -P $HOME/.local/bin
-fish_add_path $XDG_DATA_HOME/cargo/bin
-fish_add_path $BUN_INSTALL/bin
+fish_add_path -P $XDG_BIN_HOME
+fish_add_path -a $CARGO_HOME/bin
+fish_add_path -a $BUN_INSTALL/bin
+fish_add_path -a $GOBIN
 
 # ---- interactive ----
 status is-interactive || exit 0
