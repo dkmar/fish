@@ -52,6 +52,7 @@ bind f9 'commandline -i "\("'
 bind f10 'commandline -i "\)"'
 bind ctrl-h __tldr repaint  # alin's tldr helper
 bind ctrl-alt-h __fish_man_page
+bind super-shift-f 'tv text'
 
 # utils
 ## Initialize zoxide for fast jumping with 'z'.

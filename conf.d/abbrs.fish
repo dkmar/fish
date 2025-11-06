@@ -5,6 +5,13 @@ abbr -a -- ls eza
 abbr -a -- lsl eza -l
 abbr -a -- lsa eza -la
 abbr -a -- tree eza -T
+abbr -a -- tree1 eza -T --level=1
+abbr -a -- tree2 eza -T --level=2
+abbr -a -- tree3 eza -T --level=3
+
+abbr --add --command z -- docs documents
+abbr --add --command z -- adl adv
+
 abbr -a -- less bat
 abbr -a -- gs git status
 abbr -a --set-cursor -- gcm git commit -m \'%\'
@@ -17,8 +24,8 @@ abbr -a -- xcode xed
 abbr -a -- fast fast --upload
 abbr -a -- aider aider --env-file /Users/dkmar/.config/aider/.env
 abbr -a -- findall find . -type f -not -path "\"./.git*/*\""
-abbr -a -- wget curl -O
-abbr -a -- mflux mflux-generate --model dev --steps 25 --low-ram --width 832 --height 1216 --metadata --prompt
+abbr -a -- wget curl -L -O
+abbr -a discord -- open -a Discord
 abbr -a -- collapse-spaces "tr '\n' ' ' | tr -s ' '"
 abbr -a -- ytdl yt-dlp -o '"%(title)s.%(ext)s"'
 abbr -a -- mp3dl yt-dlp -o '"%(title)s.%(ext)s"' --extract-audio
@@ -29,5 +36,4 @@ abbr -a -- table csvlens --no-headers -d auto
 abbr -a -- sum awk "'{t+=\$1} END {print t}'"
 abbr --add --set-cursor -- each while read -l x\n%\nend
 abbr --add --set-cursor -- anyb 'open -a AnyBar && anybar yellow;' % '; anybar green'
-abbr --add --command z -- docs documents
 set -g MY_ABBRS_INITIALIZED true
