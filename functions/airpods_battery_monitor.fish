@@ -3,17 +3,12 @@ function check_airpods_battery
    # https://apple.stackexchange.com/a/479643/681686
    set output (pmset -g accps 2>/dev/null)
 
-   # Check if AirPods are connected (look for "AirPods" but exclude "Case")
-   if not string match -q "*AirPods*" $output
-      return
-   end
+   # Extract percentages from AirPods lines
+   ## excluding Case lines and charging/inactive devices
+   set percentages (string replace -rf '.*AirPods(?!.*Case).*\s(\d+)%; discharging.*' '$1' $output)
 
-   # Extract percentages from AirPods lines, excluding Case lines
-   set percentages (string match -r '.*AirPods(?!.*Case).*\s(\d+)%;' $output | string match -r '\d+%' | string replace '%' '')
-
-   if test (count $percentages) -eq 0
-      return
-   end
+   # exit if no such devices
+   test -n "$percentages"; or return
 
    # Find minimum percentage
    set min_charge (math min (string join ',' -- $percentages))
