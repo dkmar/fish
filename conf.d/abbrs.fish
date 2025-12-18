@@ -12,7 +12,9 @@ abbr -a -- tree3 eza -T --level=3
 
 abbr --add --command z -- docs documents
 abbr --add --command z -- adl adv
+abbr -a -- zt z tmp
 
+abbr -a -- rgi rg -i
 abbr -a -- less bat
 abbr -a -- gs git status
 abbr -a --set-cursor -- gcm git commit -m \'%\'
@@ -34,4 +36,10 @@ abbr -a -- table csvlens --no-headers -d auto
 abbr -a -- sum awk "'{t+=\$1} END {print t}'"
 abbr --add --set-cursor -- each while read -l x\n%\nend
 abbr --add --set-cursor -- anyb 'open -a AnyBar && anybar yellow;' % '; anybar green'
+abbr -a -- airpods pmset -g accps
+abbr -a -- rename "EDITOR='zed --wait' edir (br --conf ~/.config/broot/select.toml)[..-2]"
+abbr -a -- pbed "pbpaste | vipe | pbcopy"
+abbr -a -- xargs xargs -I {}
+abbr -a -- fda fd --hidden --no-ignore
+abbr -a --command just -- clean '-g clean'
 set -g MY_ABBRS_INITIALIZED true
